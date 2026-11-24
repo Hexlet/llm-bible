@@ -1,0 +1,45 @@
+amends "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Builtins.pkl"
+
+// Быстрые проверки на коммит.
+local fast = new Mapping<String, Step> {
+    ["rumdl"] = Builtins.rumdl
+    ["typos"] = Builtins.typos
+    ["jactionlint"] = Builtins.jactionlint
+    // Исследования — в docs/research/ и в его списке, а не отдельными файлами в корне.
+    ["research"] {
+        glob = List("*.md", "docs/research/**")
+        check = "./scripts/check-research.sh"
+    }
+}
+
+// Сборка сайта: VitePress падает на битых внутренних ссылках.
+local all = (fast) {
+    // VitePress срезает типы без проверки, поэтому их проверяет tsc.
+    ["typecheck"] {
+        glob = List("docs/.vitepress/**/*.ts", "docs/.vitepress/**/*.mts", "tsconfig.json", "package.json", "package-lock.json")
+        check = "npm run --silent typecheck"
+    }
+    ["build"] {
+        glob = List("docs/**", "package.json", "package-lock.json")
+        check = "npm run --silent build"
+    }
+}
+
+hooks {
+    ["pre-commit"] {
+        fix = true
+        stash = "git"
+        steps = fast
+    }
+    ["pre-push"] {
+        steps = all
+    }
+    ["check"] {
+        steps = all
+    }
+    ["fix"] {
+        fix = true
+        steps = all
+    }
+}

@@ -1,0 +1,18 @@
+# Внешние ссылки. Внутренние проверяют сборка VitePress и rumdl (MD051, MD057): он же покрывает корневые файлы и docs/research/, которых нет в сборке.
+# GITHUB_TOKEN берётся из окружения, чтобы не упираться в лимиты github.com.
+max_concurrency = 8
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
+cache = true
+max_cache_age = "1d"
+accept = ["200..=204", "429"]
+exclude_path = ["node_modules", "docs/.vitepress/dist", "docs/.vitepress/cache"]
+# Ссылки на сам репозиторий отвечают 404, пока коммит не запушен.
+# Сайты за защитой от ботов добавлять сюда по одному, с причиной в комментарии.
+exclude = [
+  "^https://github.com/mokevnin/llm-bible/",
+]
+# Только внешние ссылки: локальные пути вида /guide/ — это маршруты VitePress, а не файлы.
+root_dir = "docs"
+scheme = ["http", "https"]
