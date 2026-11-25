@@ -47,9 +47,9 @@ const resourcesSidebar: DefaultTheme.SidebarItem[] = [
   { text: 'Глоссарий', link: '/glossary' },
 ]
 
-const base = '/llm-bible/'
+const base = '/'
 // Полный адрес сайта: из него собираются sitemap, canonical и ссылки для превью в соцсетях.
-const siteUrl = `https://mokevnin.github.io${base}`
+const siteUrl = `https://llm.hexlet.io${base}`
 const siteTitle = 'LLM Bible'
 const siteDescription = 'Практическое руководство по работе с LLM'
 
@@ -63,7 +63,6 @@ export default defineConfig({
   srcExclude: ['research/**'],
   lastUpdated: true,
 
-  // robots.txt не добавляем: на github.io поисковики читают его только из корня домена, а не из /llm-bible/.
   sitemap: { hostname: siteUrl },
 
   head: [
@@ -119,11 +118,11 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/mokevnin/llm-bible' },
+      { icon: 'github', link: 'https://github.com/Hexlet/llm-bible' },
     ],
 
     editLink: {
-      pattern: 'https://github.com/mokevnin/llm-bible/edit/main/docs/:path',
+      pattern: 'https://github.com/Hexlet/llm-bible/edit/main/docs/:path',
       text: 'Предложить правку',
     },
 

@@ -11,7 +11,7 @@ exclude_path = ["node_modules", "docs/.vitepress/dist", "docs/.vitepress/cache"]
 # Ссылки на сам репозиторий отвечают 404, пока коммит не запушен.
 # Сайты за защитой от ботов добавлять сюда по одному, с причиной в комментарии.
 exclude = [
-  "^https://github.com/mokevnin/llm-bible/",
+  "^https://github.com/Hexlet/llm-bible/",
 ]
 # Только внешние ссылки: локальные пути вида /guide/ — это маршруты VitePress, а не файлы.
 root_dir = "docs"
