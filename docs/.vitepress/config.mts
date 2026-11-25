@@ -53,6 +53,26 @@ const siteUrl = `https://llm.hexlet.io${base}`
 const siteTitle = 'LLM Bible'
 const siteDescription = 'Практическое руководство по работе с LLM'
 
+// Заголовки и описания страниц для поисковой выдачи: собираются в transformPageData, проверяются в buildEnd.
+const pageMeta = new Map<string, { title: string; description: string }>()
+
+// Сборка падает, если у страницы нет своего description или title и description повторяются на разных страницах.
+function checkPageMeta() {
+  const errors: string[] = []
+  const seen = { title: new Map<string, string>(), description: new Map<string, string>() }
+  for (const [path, meta] of [...pageMeta].sort(([a], [b]) => a.localeCompare(b))) {
+    if (!meta.description) errors.push(`${path}: нет description во frontmatter`)
+    for (const key of ['title', 'description'] as const) {
+      const value = meta[key]
+      if (!value) continue
+      const other = seen[key].get(value)
+      if (other) errors.push(`${path}: ${key} совпадает с ${other}`)
+      else seen[key].set(value, path)
+    }
+  }
+  if (errors.length > 0) throw new Error(`Метаданные страниц:\n${errors.join('\n')}`)
+}
+
 export default defineConfig({
   lang: 'ru-RU',
   title: siteTitle,
@@ -78,6 +98,7 @@ export default defineConfig({
 
   // Теги, которые зависят от страницы, по рецепту из документации VitePress (transformPageData).
   transformPageData(pageData) {
+    pageMeta.set(pageData.relativePath, { title: pageData.title, description: pageData.frontmatter.description })
     const url = siteUrl + pageData.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
     const title = pageData.title || siteTitle
     const description = pageData.description || siteDescription
@@ -89,6 +110,8 @@ export default defineConfig({
       ['meta', { property: 'og:description', content: description }],
     )
   },
+
+  buildEnd: checkPageMeta,
 
   markdown: {
     // Блоки ```mermaid превращаются в компонент темы, который рисует диаграмму в браузере.
