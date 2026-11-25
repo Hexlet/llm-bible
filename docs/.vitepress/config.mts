@@ -5,15 +5,32 @@ import { mermaidMarkdown } from '@mokevnin/vitepress-mermaid/markdown'
 const guideSidebar: DefaultTheme.SidebarItem[] = [
   { text: 'Оглавление руководства', link: '/guide/' },
   { text: 'Основы', link: '/basics/' },
+  {
+    text: 'Устройство моделей',
+    collapsed: false,
+    items: [
+      { text: 'Токены, внимание, генерация', link: '/models/' },
+      { text: 'Рассуждение', link: '/reasoning/' },
+      { text: 'Агенты: как они устроены', link: '/agent-basics/' },
+      { text: 'Токены и экономика', link: '/tokens/' },
+      { text: 'Выбор модели и где смотреть', link: '/choosing/' },
+    ],
+  },
   { text: 'Постановка задач и работа с моделью', link: '/prompting/' },
   { text: 'Информация, исследования и данные', link: '/information/' },
   { text: 'Создание материалов', link: '/creation/' },
-  { text: 'Ассистенты и персонализация', link: '/assistants/' },
-  { text: 'Автоматизация', link: '/automation/' },
-  { text: 'Агенты', link: '/agents/' },
-  { text: 'Вайбкодинг', link: '/vibecoding/' },
   { text: 'Качество и оценка результата', link: '/quality/' },
   { text: 'Данные, безопасность и право', link: '/safety/' },
+  { text: 'Ассистенты и расширения', link: '/assistants/' },
+  {
+    text: 'Ветки',
+    collapsed: false,
+    items: [
+      { text: 'Автоматизация', link: '/automation/' },
+      { text: 'Агенты на практике', link: '/agents/' },
+      { text: 'Вайбкодинг', link: '/vibecoding/' },
+    ],
+  },
   { text: 'Внедрение в работе и команде', link: '/adoption/' },
   { text: 'Сценарии по профессиям', link: '/roles/' },
 ]
@@ -49,12 +66,14 @@ export default defineConfig({
   // robots.txt не добавляем: на github.io поисковики читают его только из корня домена, а не из /llm-bible/.
   sitemap: { hostname: siteUrl },
 
-  // og:image не задан: обложки для превью пока нет.
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}favicon.svg` }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: siteTitle }],
     ['meta', { property: 'og:locale', content: 'ru_RU' }],
+    ['meta', { property: 'og:image', content: `${siteUrl}images/og-cover.jpg` }],
+    ['meta', { property: 'og:image:width', content: '960' }],
+    ['meta', { property: 'og:image:height', content: '960' }],
     ['meta', { name: 'twitter:card', content: 'summary' }],
   ],
 
@@ -85,7 +104,7 @@ export default defineConfig({
         text: 'Руководство',
         link: '/guide/',
         activeMatch:
-          '^/(guide|basics|prompting|information|creation|assistants|automation|agents|vibecoding|quality|safety|adoption|roles)/',
+          '^/(guide|basics|models|reasoning|agent-basics|tokens|choosing|prompting|information|creation|assistants|automation|agents|vibecoding|quality|safety|adoption|roles)/',
       },
       { text: 'Инструменты', link: '/tools/', activeMatch: '^/tools/' },
       { text: 'Приёмы', link: '/techniques/', activeMatch: '^/techniques/' },

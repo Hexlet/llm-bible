@@ -4,6 +4,13 @@ const utm = 'utm_source=llm-bible&utm_medium=referral&utm_campaign=home'
 
 const courses = [
   {
+    title: 'ИИ и нейросети для начинающих',
+    meta: 'Бесплатно · 12 уроков, около 4 часов',
+    details:
+      'Языковые модели, промпты, работа с данными и ИИ-агенты. Подходит как первый шаг перед руководством.',
+    href: `https://ru.hexlet.io/programs/ai-for-beginners?${utm}`,
+  },
+  {
     title: 'AI-автоматизация',
     meta: '3–4 месяца · JavaScript, API, n8n, LLM',
     details:
@@ -24,7 +31,7 @@ const courses = [
   <section class="hexlet-courses">
     <div class="container">
       <h2 class="heading">Курсы Хекслета по ИИ</h2>
-      <p class="lead">Как автоматизировать рутину и собирать свои инструменты без команды разработки.</p>
+      <p class="lead">От основ до автоматизации рутины и собственных инструментов без команды разработки.</p>
       <div class="grid">
         <a
           v-for="course in courses"
@@ -90,6 +97,12 @@ const courses = [
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
